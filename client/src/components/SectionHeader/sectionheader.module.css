@@ -1,0 +1,22 @@
+.CollapseBtn {
+  width: 100%;
+  background-color: #fafafa;
+  border: 1px solid lightgray;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+}
+.CollapseBtn:hover {
+  background-color: #fafafa;
+  border: 1px solid lightgray;
+  color: black;
+  transition: none;
+}
+.CollapseBtn:focus {
+  background-color: #fafafa !important;
+  color: black !important;
+}
+.CollapseBtn p {
+  margin: 0;
+  font-weight: 300;
+}

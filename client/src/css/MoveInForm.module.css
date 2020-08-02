@@ -1,0 +1,36 @@
+.ContactForm {
+  margin-top: 5vh;
+}
+.ContactForm h1 {
+  text-align: center;
+}
+.ContactForm hr {
+  border: 1px solid black;
+  width: 20%;
+  margin-bottom: 5vh;
+}
+.Collapse {
+  margin-bottom: 3%;
+}
+.CollapseBtn {
+  width: 100%;
+  background-color: #fafafa;
+  border: 1px solid lightgray;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+}
+.CollapseBtn:hover {
+  background-color: #fafafa;
+  border: 1px solid lightgray;
+  color: black;
+  transition: none;
+}
+.CollapseBtn:focus {
+  background-color: #fafafa !important;
+  color: black !important;
+}
+.CollapseBtn p {
+  margin: 0;
+  font-weight: 300;
+}

@@ -1,5 +1,5 @@
 {
-  "name": "KSense MERN Stack Application",
+  "name": "KSense-MERN-Stack-Application",
   "version": "1.0.0",
   "description": "Online Apartment Tenant Forms",
   "main": "server.js",
@@ -23,6 +23,8 @@
     "dotenv": "^8.2.0",
     "express": "^4.16.3",
     "if-env": "^1.0.4",
-    "mailgun-js": "^0.22.0"
+    "mailgun-js": "^0.22.0",
+    "mongodb": "^3.6.0",
+    "react-hook-form": "^6.2.0"
   }
 }

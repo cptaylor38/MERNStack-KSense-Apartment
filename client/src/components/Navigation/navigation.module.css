@@ -1,0 +1,30 @@
+.Navigation {
+  display: flex;
+  height: 15vh;
+  border-bottom: red 5px solid;
+}
+.Navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0;
+}
+.Links:hover,
+.Links:visited,
+.Links:link,
+.Links:active {
+  text-decoration: none !important;
+}
+.Links {
+  color: black;
+  padding: 5vh 5vw;
+  font-size: x-large;
+  text-align: center;
+  background-color: white;
+  border: none;
+}
+.Links:hover {
+  background-color: white;
+  color: black;
+}
