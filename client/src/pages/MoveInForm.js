@@ -24,6 +24,9 @@ export default function App() {
   const toggle = () => {
     setIsOpen(!isOpen);
   };
+  const submitforms = () => {
+    document.getElementById("contact-form").submit();
+  };
   const [state, setState] = useState([
     {
       header: "CONTACT INFORMATION",
@@ -34,7 +37,7 @@ export default function App() {
     {
       header: "KITCHEN INSPECTION",
       collapsed: true,
-      expanded: false,
+      expanded: true,
       component: <KitchenForm />,
     },
     {
@@ -113,7 +116,6 @@ export default function App() {
   return (
     <div className={styles["ContactForm"]}>
       <h1>Welcome To The New Move In Form</h1>
-      <hr />
       {state.map((index) => {
         return (
           <div>
@@ -153,7 +155,7 @@ export default function App() {
           </div>
         );
       })}
-      <button form="my-form" type="submit">
+      <button onClick={submitforms} type="submit">
         Submit
       </button>
     </div>

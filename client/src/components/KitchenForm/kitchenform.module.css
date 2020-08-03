@@ -1,0 +1,27 @@
+.KitchenHeader {
+  text-align: left !important;
+}
+.KitchenMarkAll {
+  cursor: pointer;
+  color: teal;
+  text-decoration: teal underline;
+  background: none;
+  border: none;
+  margin: 1% 0% 1% 0%;
+}
+.CheckboxWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
+.KitchenFormWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+@media screen and (max-width: 978px) {
+  .CheckboxWrapper {
+    width: 50%;
+  }
+}

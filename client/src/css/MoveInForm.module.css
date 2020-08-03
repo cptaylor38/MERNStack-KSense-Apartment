@@ -4,10 +4,10 @@
 .ContactForm h1 {
   text-align: center;
 }
-.ContactForm hr {
-  border: 1px solid black;
+.HeadingHR {
+  /* border: 1px solid black;
   width: 20%;
-  margin-bottom: 5vh;
+  margin-bottom: 5vh; */
 }
 .Collapse {
   margin-bottom: 3%;

@@ -18,7 +18,6 @@ function ContactForm(props) {
     state: "",
     zip: "",
   });
-  const { register } = useForm();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setState((prevState) => ({
@@ -35,8 +34,8 @@ function ContactForm(props) {
   };
   return (
     <div>
-      <form id="my-form" onSubmit={handleSubmit(onSubmit)}>
-        <FormGroup>
+      <form id="contact-form" onSubmit={handleSubmit(onSubmit)}>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="exampleEmail">
             First Name
           </Label>
@@ -49,7 +48,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="examplePassword">
             Last Name
           </Label>
@@ -62,7 +61,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="examplePassword">
             Email
           </Label>
@@ -76,7 +75,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="examplePassword">
             Phone
           </Label>
@@ -91,7 +90,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="examplePassword">
             New Unit #
           </Label>
@@ -104,7 +103,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="examplePassword">
             Current Mailing Address
           </Label>
@@ -117,7 +116,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="examplePassword">
             Current Unit #
           </Label>
@@ -130,7 +129,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="examplePassword">
             Current City
           </Label>
@@ -143,7 +142,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="exampleSelect">
             Current State
           </Label>
@@ -209,7 +208,7 @@ function ContactForm(props) {
             <option value="WY">Wyoming</option>
           </Input>
         </FormGroup>
-        <FormGroup>
+        <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="examplePassword">
             Current Zip Code
           </Label>

@@ -2,3 +2,6 @@
   content: " *";
   color: darkred;
 }
+.ContactFormGroup {
+  width: 50%;
+}
