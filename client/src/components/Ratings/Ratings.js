@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { FormGroup, CustomInput } from "reactstrap";
+import { KitchenGoodContext } from "../../Store";
+import { KitchenNAContext } from "../../Store";
 
 function Ratings({ parentCheckedGood, parentCheckedNA }) {
+  //pass usecontext to parent then it passes to child component
+  const [kitchenCheckedGood, setKitchenCheckedGood] = useContext(
+    KitchenGoodContext
+  );
+  const [kitchenCheckedNA, setKitchenCheckedNA] = useContext(KitchenNAContext);
   return (
     <div>
-      <FormGroup>
+      <FormGroup required>
         <div>
           <CustomInput
-            checked={parentCheckedGood ? true : null}
+            checked={parentCheckedGood}
             type="checkbox"
             id="exampleCustomCheckbox"
             label="Good"
@@ -23,7 +30,7 @@ function Ratings({ parentCheckedGood, parentCheckedNA }) {
             label="Poor"
           />
           <CustomInput
-            checked={parentCheckedNA ? true : null}
+            checked={parentCheckedNA}
             type="checkbox"
             id="exampleCustomCheckbox4"
             label="N/A"

@@ -1,0 +1,20 @@
+.CheckboxWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 33%;
+}
+.CheckboxWrapper h5::after {
+  content: " *";
+  color: darkred;
+}
+.BathroomTwoFormWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+@media screen and (max-width: 978px) {
+  .CheckboxWrapper {
+    width: 50%;
+  }
+}

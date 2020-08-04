@@ -1,0 +1,32 @@
+.SignatureCanvas {
+  border: 1px solid black;
+  width: 100%;
+  min-height: 80vh;
+}
+.SignatureBtn {
+  line-height: 2;
+  min-height: 2rem;
+  padding: 3px 12px !important;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #eeeeee;
+}
+.SignatureForm {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.ContentWrapper {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+.DateOne,
+.DateTwo {
+  margin-top: 5%;
+}
+.Required::after {
+  content: " *";
+  color: darkred;
+}

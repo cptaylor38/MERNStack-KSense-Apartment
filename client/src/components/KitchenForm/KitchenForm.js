@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styles from "./kitchenform.module.css";
-import Ratings from "./Ratings";
-import ImageUploader from "../ImageUploader/ImageUploader";
+import Ratings from "../Ratings";
+import ImageUploader from "../CommentsSection/CommentsSection";
+import SectionHeader from "../SectionHeader";
+import { KitchenGoodContext, KitchenNAContext } from "../../Store";
 
 function KitchenForm() {
-  const [checkGood, setCheckGood] = useState(false);
-  const [checkNA, setCheckNA] = useState(false);
+  const [kitchenCheckedGood, setKitchenCheckedGood] = useContext(
+    KitchenGoodContext
+  );
+  const [kitchenCheckedNA, setKitchenCheckedNA] = useContext(KitchenNAContext);
+
   const [objects, setObjects] = useState([
     "Walls and Ceilings",
     "Floor/Floor Covering",
@@ -22,36 +27,22 @@ function KitchenForm() {
   ]);
   return (
     <div>
-      <h1 className={styles["KitchenHeader"]}>Kitchen Inspection</h1>
-      <button
-        className={styles["KitchenMarkAll"]}
-        onClick={() => setCheckGood(!checkGood)}
-      >
-        Mark all items as "Good" in this section
-      </button>
-      <br />
-      <button
-        className={styles["KitchenMarkAll"]}
-        onClick={() => setCheckNA(!checkNA)}
-      >
-        Mark all items as "N/A" in this section
-      </button>
+      <SectionHeader title="Kitchen Inspection" />
       <form className={styles["KitchenFormWrapper"]} id="kitchen-form">
         {objects.map((object, index) => {
           return (
             <div className={styles["CheckboxWrapper"]}>
               <h5>{object}</h5>
               <Ratings
-                parentCheckedGood={checkGood}
-                parentCheckedNA={checkNA}
+                parentCheckedGood={kitchenCheckedGood}
+                parentCheckedNA={kitchenCheckedNA}
               />
             </div>
           );
         })}
-        {/* <hr className={styles["KitchenHR"]} /> */}
       </form>
       <br />
-      <ImageUploader />
+      <ImageUploader title={"Kitchen"} />
     </div>
   );
 }

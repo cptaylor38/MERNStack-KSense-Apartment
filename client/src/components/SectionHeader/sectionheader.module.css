@@ -1,0 +1,13 @@
+.Header {
+  text-align: left !important;
+}
+.MarkAll {
+  cursor: pointer;
+  color: teal;
+  text-decoration: teal underline;
+  background: none;
+  border: none;
+}
+.MarkAllWrapper {
+  margin: 2% 0%;
+}

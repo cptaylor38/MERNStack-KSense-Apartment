@@ -1,0 +1,7 @@
+.Required::after {
+  content: " *";
+  color: darkred;
+}
+.KeysFormGroup {
+  width: 50%;
+}

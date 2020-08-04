@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import styles from "./imageuploader.module.css";
+import styles from "./commentssection.module.css";
 
 const thumbsContainer = {
   display: "flex",
@@ -33,7 +33,7 @@ const img = {
   height: "100%",
 };
 
-function ImageUploader(props) {
+function ImageUploader({ title }) {
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps, open } = useDropzone({
     accept: "image/*",
@@ -70,7 +70,7 @@ function ImageUploader(props) {
       <hr className={styles["HR"]} />
       <form className={styles["UploadForm"]}>
         <div className={styles["UploadWrapper"]}>
-          <h5>Upload photos of issues found in the kitchen</h5>
+          <h5>Upload photos of issues found in the {title}</h5>
           <section className={styles["Container"]}>
             <div
               id={styles["Dropzone"]}
@@ -95,7 +95,7 @@ function ImageUploader(props) {
           </p>
         </div>
         <div className={styles["CommentWrapper"]}>
-          <h5>Notes of the kitchen</h5>
+          <h5>Notes of the {title}</h5>
           <textarea className={styles["Textarea"]} />
         </div>
       </form>
