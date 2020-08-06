@@ -5,7 +5,7 @@ import styles from "../css/MoveInForm.module.css";
 import { FormSectionsContext } from "../Store";
 import axios from "axios";
 
-export default function App() {
+export default function App({ Apartment }) {
   const [state, setState] = useContext(FormSectionsContext);
   const sendData = () => {
     axios.post("/api/world", state).then((res) => {
@@ -14,7 +14,7 @@ export default function App() {
   };
   return (
     <div className={styles["ContactForm"]}>
-      <h1>Welcome To The New Move In Form</h1>
+      <h1>{Apartment} Move-in Form</h1>
       {state.map((index) => {
         return (
           <div>

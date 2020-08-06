@@ -1,13 +1,13 @@
 import React from "react";
-import { Jumbotron } from 'reactstrap';
+import { Jumbotron } from "reactstrap";
 import styles from "./NoMatch.module.css";
 
 function NoMatch() {
   return (
-    <div>
-      <div className={styles["No-Match"]}>
+    <div className={styles["NoMatchWrapper"]}>
+      <div className={styles["NoMatch"]}>
         <Jumbotron
-          className={styles["No-Match-Box"]}
+          className={styles["NoMatchBox"]}
           bgcolor="text.secondary"
           color="primary.contrastText"
           p={2}
@@ -18,7 +18,6 @@ function NoMatch() {
               🙄
             </span>
           </h1>
-          <a href="/">Go home</a>
         </Jumbotron>
       </div>
     </div>

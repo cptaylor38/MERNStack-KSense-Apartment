@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FormGroup, Input, Label } from "reactstrap";
-import { useForm } from "react-hook-form";
 import styles from "./contactform.module.css";
 import axios from "axios";
 import InputMask from "react-input-mask";
@@ -25,7 +24,6 @@ function ContactForm(props) {
       [name]: value,
     }));
   };
-  const { handleSubmit } = useForm();
   const onSubmit = () => {
     console.log(state);
     axios.post("/contactinfo", state).then(function (res) {
@@ -34,7 +32,7 @@ function ContactForm(props) {
   };
   return (
     <div>
-      <form id="contact-form" onSubmit={handleSubmit(onSubmit)}>
+      <form id="contact-form">
         <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="exampleEmail">
             First Name

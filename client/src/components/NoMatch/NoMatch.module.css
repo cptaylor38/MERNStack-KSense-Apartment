@@ -1,16 +1,12 @@
-.No-Match {
-  height: 90vh;
-  width: 100vw;
+.NoMatchBox {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.No-Match-Box {
-  height: 50%;
-  width: 50%;
-  border-radius: 5px;
+.NoMatchWrapper {
+  height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  flex-direction: column;
+  align-items: center;
 }
