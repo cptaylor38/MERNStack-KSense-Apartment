@@ -1,30 +1,38 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useContext } from "react";
 import { FormGroup, Label, Input } from "reactstrap";
 import Popup from "reactjs-popup";
 import SignaturePad from "react-signature-canvas";
+import { SignatureFormContext } from "../../Store";
 import "./signaturesform.css";
 
 function SignaturesForm() {
-  const [imageURL, setImageURL] = useState(null); // create a state that will contain our image url
-  const [imageURLTwo, setImageURLTwo] = useState(null);
+  const [signatureFormImages, setSignatureFormImages] = useContext(
+    SignatureFormContext
+  );
   const sigCanvas = useRef({});
 
-  /* a function that uses the canvas ref to clear the canvas 
-  via a method given by react-signature-canvas */
   const clear = () => sigCanvas.current.clear();
 
-  /* a function that uses the canvas ref to trim the canvas 
-  from white spaces via a method given by react-signature-canvas
-  then saves it in our state */
-  const save = () =>
-    setImageURL(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
-  const saveTwo = () =>
-    setImageURLTwo(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
+  const save = (event) => {
+    const index = event.target.value;
+    const arr = [...signatureFormImages];
+
+    if (signatureFormImages[index]) {
+      arr[index] = sigCanvas.current.getTrimmedCanvas().toDataURL("image/png");
+      setSignatureFormImages(arr);
+    } else {
+      setSignatureFormImages((state) => [
+        ...state,
+        sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"),
+      ]);
+    }
+  };
   return (
     <div className="SignatureForm">
       <div className={"ContentWrapper"}>
         <h5 className={"Required"}>Resident's Signature</h5>
         <Popup
+          className={"PopupContent"}
           modal
           trigger={
             <button className={"SignatureBtn"}>Open Signature Pad</button>
@@ -41,7 +49,7 @@ function SignaturesForm() {
                 }}
               />
               {/* Button to trigger save canvas image */}
-              <button className={"SignatureBtn"} onClick={save}>
+              <button value={0} className={"SignatureBtn"} onClick={save}>
                 Save
               </button>
               <button className={"SignatureBtn"} onClick={clear}>
@@ -56,9 +64,9 @@ function SignaturesForm() {
 
         {/* if our we have a non-null image url we should 
       show an image and pass our imageURL state to it*/}
-        {imageURL ? (
+        {signatureFormImages[0] ? (
           <img
-            src={imageURL}
+            src={signatureFormImages[0]}
             alt="my signature"
             style={{
               height: "150px",
@@ -86,6 +94,7 @@ function SignaturesForm() {
       <div className={"ContentWrapper"}>
         <h5>Resident's Signature</h5>
         <Popup
+          className={"PopupContent"}
           modal
           trigger={
             <button className={"SignatureBtn"}>Open Signature Pad</button>
@@ -97,11 +106,12 @@ function SignaturesForm() {
               <SignaturePad
                 ref={sigCanvas}
                 canvasProps={{
+                  dotSize: 10,
                   className: "SignatureCanvas",
                 }}
               />
               {/* Button to trigger save canvas image */}
-              <button className={"SignatureBtn"} onClick={saveTwo}>
+              <button value={1} className={"SignatureBtn"} onClick={save}>
                 Save
               </button>
               <button className={"SignatureBtn"} onClick={clear}>
@@ -115,14 +125,15 @@ function SignaturesForm() {
         </Popup>
         {/* if our we have a non-null image url we should 
       show an image and pass our imageURL state to it*/}
-        {imageURLTwo ? (
+        {signatureFormImages[1] ? (
           <img
-            src={imageURLTwo}
+            src={signatureFormImages[1]}
             alt="my signature"
             style={{
               height: "150px",
               display: "block",
               margin: "0 auto",
+              marginTop: "5%",
               border: "1px solid black",
               width: "200px",
             }}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
 import DocumentTitle from "react-document-title";
@@ -17,8 +17,9 @@ function App() {
     });
   };
 
+  //checking if client exists in DB
   const renderMoveIn = (routerProps) => {
-    const apartmentName = routerProps.match.params.apartment;
+    const apartmentName = routerProps.match.params.apartment.toLowerCase();
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Accept", "application/json");
@@ -26,9 +27,7 @@ function App() {
     axios
       .get(`http://localhost:5000/api/${apartmentName}`, headers)
       .then((res) => {
-        let response = res.data[0].apartment;
-        setState(response);
-        return <MoveInForm apartment={apartmentName} />;
+        setState(true);
       })
       .catch((error) => {
         console.log(error);
@@ -36,6 +35,7 @@ function App() {
     const Apartment = apartmentName.toProperCase();
     return state ? <MoveInForm Apartment={Apartment} /> : <NoMatch />;
   };
+  useEffect(() => {}, [state]);
   return (
     <DocumentTitle title="Move-In Inspection">
       <Store>

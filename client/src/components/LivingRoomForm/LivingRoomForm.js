@@ -3,15 +3,21 @@ import SectionHeader from "../SectionHeader";
 import Ratings from "../Ratings";
 import styles from "./livingroomform.module.css";
 import ImageUploader from "../CommentsSection";
-import { LivingRoomGoodContext, LivingRoomNAContext } from "../../Store";
+import {
+  LivingRoomGoodContext,
+  LivingRoomNAContext,
+  FormQuestionsContext,
+} from "../../Store";
 
 function LivingRoomForm() {
+  const [formQuestions, setFormQuestions] = useContext(FormQuestionsContext);
   const [livingRoomCheckedGood, setLivingRoomCheckedGood] = useContext(
     LivingRoomGoodContext
   );
   const [livingRoomCheckedNA, setLivingRoomCheckedNA] = useContext(
     LivingRoomNAContext
   );
+  const array = formQuestions.living;
   const [objects, setObjects] = useState([
     "Walls and Ceilings",
     "Floor/Floor Covering",
@@ -25,22 +31,33 @@ function LivingRoomForm() {
   ]);
   return (
     <div>
-      <SectionHeader title="Living Room Inspection" />
-      <form className={styles["LivingRoomFormWrapper"]} id="living-room-form">
-        {objects.map((object, index) => {
-          return (
-            <div className={styles["CheckboxWrapper"]}>
-              <h5>{object}</h5>
-              <Ratings
-                parentCheckedGood={livingRoomCheckedGood}
-                parentCheckedNA={livingRoomCheckedNA}
-              />
-            </div>
-          );
-        })}
-      </form>
-      <br />
-      <ImageUploader title={"Living Room"} />
+      {array ? (
+        <div>
+          <SectionHeader title="Living Room Inspection" name="living" />
+          <div
+            className={styles["LivingRoomFormWrapper"]}
+            id="living-room-form"
+          >
+            {array.map((object, index) => {
+              return (
+                <div className={styles["CheckboxWrapper"]} key={index}>
+                  <h5>{object}</h5>
+                  <Ratings
+                    section="living"
+                    question={object}
+                    parentCheckedGood={livingRoomCheckedGood}
+                    parentCheckedNA={livingRoomCheckedNA}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <br />
+          <ImageUploader name="living" title={"Living Room"} />
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

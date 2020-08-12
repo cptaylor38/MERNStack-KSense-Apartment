@@ -1,7 +1,11 @@
+.popup-content {
+  width: 80% !important;
+  height: 80% !important;
+}
 .SignatureCanvas {
   border: 1px solid black;
   width: 100%;
-  min-height: 80vh;
+  height: 72vh !important;
 }
 .SignatureBtn {
   line-height: 2;

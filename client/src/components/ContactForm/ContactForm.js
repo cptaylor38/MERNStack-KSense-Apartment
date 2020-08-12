@@ -1,44 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 import styles from "./contactform.module.css";
 import axios from "axios";
 import InputMask from "react-input-mask";
+import { ContactInfoContext } from "../../Store";
 
 function ContactForm(props) {
-  const [state, setState] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    phone: "",
-    nunit: "",
-    address: "",
-    cunit: "",
-    city: "",
-    state: "",
-    zip: "",
-  });
+  const [contactInfo, setContactInfo] = useContext(ContactInfoContext);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setState((prevState) => ({
+    setContactInfo((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
-  const onSubmit = () => {
-    console.log(state);
-    axios.post("/contactinfo", state).then(function (res) {
-      console.log(res);
-    });
-  };
   return (
     <div>
-      <form id="contact-form">
+      <div id="contact-form">
         <FormGroup className={styles["ContactFormGroup"]}>
           <Label className={styles["Required"]} for="exampleEmail">
             First Name
           </Label>
           <Input
-            value={state.fname}
+            value={contactInfo.fname}
             onChange={handleChange}
             type="text"
             placeholder="First name"
@@ -51,7 +35,7 @@ function ContactForm(props) {
             Last Name
           </Label>
           <Input
-            value={state.lname}
+            value={contactInfo.lname}
             onChange={handleChange}
             type="text"
             placeholder="Last name"
@@ -64,7 +48,7 @@ function ContactForm(props) {
             Email
           </Label>
           <Input
-            value={state.email}
+            value={contactInfo.email}
             onChange={handleChange}
             type="text"
             placeholder="Email"
@@ -78,7 +62,7 @@ function ContactForm(props) {
             Phone
           </Label>
           <Input
-            value={state.phone}
+            value={contactInfo.phone}
             onChange={handleChange}
             type="tel"
             placeholder="Mobile number"
@@ -93,7 +77,7 @@ function ContactForm(props) {
             New Unit #
           </Label>
           <Input
-            value={state.nunit}
+            value={contactInfo.nunit}
             onChange={handleChange}
             type="number"
             placeholder="New Unit #"
@@ -106,7 +90,7 @@ function ContactForm(props) {
             Current Mailing Address
           </Label>
           <Input
-            value={state.address}
+            value={contactInfo.address}
             onChange={handleChange}
             type="address"
             placeholder="Current Mailing Address"
@@ -119,7 +103,7 @@ function ContactForm(props) {
             Current Unit #
           </Label>
           <Input
-            value={state.cunit}
+            value={contactInfo.cunit}
             onChange={handleChange}
             type="number"
             placeholder="Current Unit #"
@@ -132,7 +116,7 @@ function ContactForm(props) {
             Current City
           </Label>
           <Input
-            value={state.city}
+            value={contactInfo.city}
             onChange={handleChange}
             type="city"
             placeholder="Current City"
@@ -145,7 +129,7 @@ function ContactForm(props) {
             Current State
           </Label>
           <Input
-            value={state.state}
+            value={contactInfo.state}
             onChange={handleChange}
             type="select"
             placeholder="Current State"
@@ -211,7 +195,7 @@ function ContactForm(props) {
             Current Zip Code
           </Label>
           <Input
-            value={state.zip}
+            value={contactInfo.zip}
             onChange={handleChange}
             type="number"
             placeholder="Current Zip Code"
@@ -219,7 +203,7 @@ function ContactForm(props) {
             required
           />
         </FormGroup>
-      </form>
+      </div>
     </div>
   );
 }

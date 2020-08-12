@@ -1,34 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FormGroup, Input, Label } from "reactstrap";
 import styles from "./keysform.module.css";
 import ImageUploader from "../CommentsSection";
+import { KeysFormContext } from "../../Store";
 
 function KeysForm() {
-  const [state, setState] = useState({
-    fdkeys: "",
-    dbkeys: "",
-    mbkeys: "",
-    cakeys: "",
-    rkeys: "",
-    other: "",
-    othernames: "",
-  });
+  const [keysFormAnswers, setKeysFormAnswers] = useContext(KeysFormContext);
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setState((prevState) => ({
+    setKeysFormAnswers((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
   return (
     <div>
-      <form id="contact-form">
+      <div id="contact-form">
         <FormGroup className={styles["KeysFormGroup"]}>
           <Label className={styles["Required"]} for="exampleEmail">
             Quantity of Front Door Keys Issued
           </Label>
           <Input
-            value={state.fdkeys}
+            value={keysFormAnswers.fdkeys}
             onChange={handleChange}
             type="number"
             name="fdkeys"
@@ -40,7 +33,7 @@ function KeysForm() {
             Quantity of Dead Bolt Keys Issued
           </Label>
           <Input
-            value={state.dbkeys}
+            value={keysFormAnswers.dbkeys}
             onChange={handleChange}
             type="number"
             name="dbkeys"
@@ -52,7 +45,7 @@ function KeysForm() {
             Quantity of Mailbox Keys Issued
           </Label>
           <Input
-            value={state.mbkeys}
+            value={keysFormAnswers.mbkeys}
             onChange={handleChange}
             type="number"
             name="mbkeys"
@@ -64,7 +57,7 @@ function KeysForm() {
             Quantity of Common Area Keys Issued
           </Label>
           <Input
-            value={state.cakeys}
+            value={keysFormAnswers.cakeys}
             onChange={handleChange}
             type="number"
             name="cakeys"
@@ -76,7 +69,7 @@ function KeysForm() {
             Quantity of Remotes Issued
           </Label>
           <Input
-            value={state.rkeys}
+            value={keysFormAnswers.rkeys}
             onChange={handleChange}
             type="number"
             name="rkeys"
@@ -86,7 +79,7 @@ function KeysForm() {
         <FormGroup className={styles["KeysFormGroup"]}>
           <Label for="exampleEmail">Quantity of other objects Issued</Label>
           <Input
-            value={state.other}
+            value={keysFormAnswers.other}
             onChange={handleChange}
             type="number"
             name="other"
@@ -95,14 +88,14 @@ function KeysForm() {
         <FormGroup className={styles["KeysFormGroup"]}>
           <Label for="exampleEmail">What other objects have been issued?</Label>
           <Input
-            value={state.othernames}
+            value={keysFormAnswers.othernames}
             onChange={handleChange}
             type="text"
             name="othernames"
           />
         </FormGroup>
-      </form>
-      <ImageUploader title={"Keys to Unit"} />
+      </div>
+      <ImageUploader title="Keys to Unit" />
     </div>
   );
 }

@@ -3,9 +3,14 @@ import styles from "./bedthreeform.module.css";
 import Ratings from "../Ratings";
 import ImageUploader from "../CommentsSection/CommentsSection";
 import SectionHeader from "../SectionHeader";
-import { BedroomThreeGoodContext, BedroomThreeNAContext } from "../../Store";
+import {
+  BedroomThreeGoodContext,
+  BedroomThreeNAContext,
+  FormQuestionsContext,
+} from "../../Store";
 
 function BedThreeForm() {
+  const [formQuestions, setFormQuestions] = useContext(FormQuestionsContext);
   const [bedroomThreeCheckedGood, setBedroomThreeCheckedGood] = useContext(
     BedroomThreeGoodContext
   );
@@ -24,27 +29,36 @@ function BedThreeForm() {
     "Furniture (if any)",
     "Other",
   ]);
+  const array = formQuestions.bedthree;
   return (
     <div>
-      <SectionHeader title="Bedroom #3 Inspection" />
-      <form
-        className={styles["BedroomThreeFormWrapper"]}
-        id="bedroom-three-form"
-      >
-        {objects.map((object, index) => {
-          return (
-            <div className={styles["CheckboxWrapper"]}>
-              <h5>{object}</h5>
-              <Ratings
-                parentCheckedGood={bedroomThreeCheckedGood}
-                parentCheckedNA={bedroomThreeCheckedNA}
-              />
-            </div>
-          );
-        })}
-      </form>
-      <br />
-      <ImageUploader title={"Bedroom #3"} />
+      {array ? (
+        <div>
+          <SectionHeader title="Bedroom #3 Inspection" name="bedthree" />
+          <div
+            className={styles["BedroomThreeFormWrapper"]}
+            id="bedroom-three-form"
+          >
+            {array.map((object, index) => {
+              return (
+                <div className={styles["CheckboxWrapper"]} key={index}>
+                  <h5>{object}</h5>
+                  <Ratings
+                    section="bedthree"
+                    question={object}
+                    parentCheckedGood={bedroomThreeCheckedGood}
+                    parentCheckedNA={bedroomThreeCheckedNA}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <br />
+          <ImageUploader name="bedthree" title={"Bedroom #3"} />
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

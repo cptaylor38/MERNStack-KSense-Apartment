@@ -32,3 +32,30 @@
   margin: 0;
   font-weight: 300;
 }
+.Loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 99;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
+}
+.SubmitBox {
+  display: flex;
+  flex-direction: row;
+  margin: 3% 0% 5% 0%;
+  justify-content: space-between;
+}
+.ErrorMessage {
+  color: red;
+}
+@media screen and (max-width: 750px) {
+  .SubmitBtn {
+    width: 100%;
+  }
+  .SubmitBox {
+    flex-direction: column;
+  }
+}

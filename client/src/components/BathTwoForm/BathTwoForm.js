@@ -3,16 +3,21 @@ import styles from "./bathtwoform.module.css";
 import Ratings from "../Ratings";
 import ImageUploader from "../CommentsSection/CommentsSection";
 import SectionHeader from "../SectionHeader";
-import { BathroomTwoGoodContext, BathroomTwoNAContext } from "../../Store";
+import {
+  BathroomTwoGoodContext,
+  BathroomTwoNAContext,
+  FormQuestionsContext,
+} from "../../Store";
 
 function BathTwoForm() {
+  const [formQuestions, setFormQuestions] = useContext(FormQuestionsContext);
   const [bathroomTwoCheckedGood, setBathroomTwoCheckedGood] = useContext(
     BathroomTwoGoodContext
   );
   const [bathroomTwoCheckedNA, setBathroomTwoCheckedNA] = useContext(
     BathroomTwoNAContext
   );
-
+  const array = formQuestions.bathtwo;
   const [objects, setObjects] = useState([
     "Walls and Ceilings",
     "Floor/Floor Covering",
@@ -36,22 +41,33 @@ function BathTwoForm() {
   ]);
   return (
     <div>
-      <SectionHeader title="Bathroom #2 Inspection" />
-      <form className={styles["BathroomTwoFormWrapper"]} id="bathroom-two-form">
-        {objects.map((object, index) => {
-          return (
-            <div className={styles["CheckboxWrapper"]}>
-              <h5>{object}</h5>
-              <Ratings
-                parentCheckedGood={bathroomTwoCheckedGood}
-                parentCheckedNA={bathroomTwoCheckedNA}
-              />
-            </div>
-          );
-        })}
-      </form>
-      <br />
-      <ImageUploader title={"Bathroom #2"} />
+      {array ? (
+        <div>
+          <SectionHeader title="Bathroom #2 Inspection" name="bathtwo" />
+          <div
+            className={styles["BathroomTwoFormWrapper"]}
+            id="bathroom-two-form"
+          >
+            {array.map((object, index) => {
+              return (
+                <div className={styles["CheckboxWrapper"]} key={index}>
+                  <h5>{object}</h5>
+                  <Ratings
+                    section="bathtwo"
+                    question={object}
+                    parentCheckedGood={bathroomTwoCheckedGood}
+                    parentCheckedNA={bathroomTwoCheckedNA}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <br />
+          <ImageUploader name="bathtwo" title={"Bathroom #2"} />{" "}
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }

@@ -1,31 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import StarRatings from "react-star-ratings";
 import styles from "./surveyform.module.css";
+import { StarRatingsContext } from "../../Store";
 
 function SurveyForm() {
-  const [one, setOne] = useState(0);
-  const [two, setTwo] = useState(0);
-  const [three, setThree] = useState(0);
-  const [four, setFour] = useState(0);
-  const [five, setFive] = useState(0);
-  const [six, setSix] = useState(0);
-  const changeRatingOne = (newRating, name) => {
-    setOne(newRating);
-  };
-  const changeRatingTwo = (newRating, name) => {
-    setTwo(newRating);
-  };
-  const changeRatingThree = (newRating, name) => {
-    setThree(newRating);
-  };
-  const changeRatingFour = (newRating, name) => {
-    setFour(newRating);
-  };
-  const changeRatingFive = (newRating, name) => {
-    setFive(newRating);
-  };
-  const changeRatingSix = (newRating, name) => {
-    setSix(newRating);
+  const [starRatings, setStarRatings] = useContext(StarRatingsContext);
+  const handleChange = (newRating, name) => {
+    setStarRatings((state) => ({ ...state, [name]: newRating }));
   };
   return (
     <div>
@@ -38,10 +19,10 @@ function SurveyForm() {
         Was the office team friendly and helpful?
       </p>
       <StarRatings
-        rating={one}
-        starRatedColor="red"
+        rating={starRatings.one}
+        starRatedColor="blue"
         starDimension="30px"
-        changeRating={changeRatingOne}
+        changeRating={handleChange}
         numberOfStars={5}
         name="one"
       />
@@ -49,10 +30,10 @@ function SurveyForm() {
         Was your apartment ready when you came to move-in?
       </p>
       <StarRatings
-        rating={two}
+        rating={starRatings.two}
         starRatedColor="blue"
         starDimension="30px"
-        changeRating={changeRatingTwo}
+        changeRating={handleChange}
         numberOfStars={5}
         name="two"
       />
@@ -60,10 +41,10 @@ function SurveyForm() {
         How satisfied are you with the cleanliness of your apartment?
       </p>
       <StarRatings
-        rating={three}
+        rating={starRatings.three}
         starRatedColor="blue"
         starDimension="30px"
-        changeRating={changeRatingThree}
+        changeRating={handleChange}
         numberOfStars={5}
         name="three"
       />
@@ -71,10 +52,10 @@ function SurveyForm() {
         Is everything in working order (appliances, door locks, faucets, etc.)?
       </p>
       <StarRatings
-        rating={four}
+        rating={starRatings.four}
         starRatedColor="blue"
         starDimension="30px"
-        changeRating={changeRatingFour}
+        changeRating={handleChange}
         numberOfStars={5}
         name="four"
       />
@@ -82,10 +63,10 @@ function SurveyForm() {
         How satisfied are you with the community amenities available?
       </p>
       <StarRatings
-        rating={five}
+        rating={starRatings.five}
         starRatedColor="blue"
         starDimension="30px"
-        changeRating={changeRatingFive}
+        changeRating={handleChange}
         numberOfStars={5}
         name="five"
       />
@@ -93,10 +74,10 @@ function SurveyForm() {
         Overall, how satisfied are you with your new apartment?
       </p>
       <StarRatings
-        rating={six}
+        rating={starRatings.six}
         starRatedColor="blue"
         starDimension="30px"
-        changeRating={changeRatingSix}
+        changeRating={handleChange}
         numberOfStars={5}
         name="six"
       />

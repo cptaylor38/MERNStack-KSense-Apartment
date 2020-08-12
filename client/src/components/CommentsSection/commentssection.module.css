@@ -10,6 +10,20 @@
 }
 .Container {
   max-width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 10vh;
+  background-color: #eeeeee;
+  border: #c4c4c4 1px dashed;
+}
+.ImageInput {
+  text-align: center;
+  height: 10vh !important;
+  width: 100% !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .UploadBtn {
   line-height: 2;

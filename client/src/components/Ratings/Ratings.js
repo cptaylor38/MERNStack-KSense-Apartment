@@ -1,38 +1,69 @@
-import React, { useContext } from "react";
+import React, { useState, useCallback, useContext, useEffect } from "react";
 import { FormGroup, CustomInput } from "reactstrap";
-import { KitchenGoodContext } from "../../Store";
-import { KitchenNAContext } from "../../Store";
+import UniqueString from "unique-string";
+import { FormAnswersContext } from "../../Store";
 
-function Ratings({ parentCheckedGood, parentCheckedNA }) {
-  //pass usecontext to parent then it passes to child component
-  const [kitchenCheckedGood, setKitchenCheckedGood] = useContext(
-    KitchenGoodContext
+function Ratings({ parentCheckedGood, parentCheckedNA, question, section }) {
+  const [formAnswers, setFormAnswers] = useContext(FormAnswersContext);
+  const onChange = useCallback(
+    (e) => {
+      const { name, value } = e.target;
+      setFormAnswers((state) => ({
+        ...state,
+        [section]: { ...state[section], [name]: value },
+      }));
+    },
+    [section, question]
   );
-  const [kitchenCheckedNA, setKitchenCheckedNA] = useContext(KitchenNAContext);
+  const string = UniqueString();
+  const checkGood = () => {
+    return parentCheckedGood
+      ? document.getElementById(string + "1").click()
+      : null;
+  };
+  const checkNA = () => {
+    return parentCheckedNA
+      ? document.getElementById(string + "4").click()
+      : null;
+  };
+  useEffect(() => {
+    checkGood();
+    checkNA();
+  }, [parentCheckedNA, parentCheckedGood]);
   return (
     <div>
-      <FormGroup required>
+      <FormGroup>
         <div>
           <CustomInput
-            checked={parentCheckedGood}
-            type="checkbox"
-            id="exampleCustomCheckbox"
+            onChange={onChange}
+            type="radio"
+            id={string + "1"}
+            name={question}
+            value="Good"
             label="Good"
           />
           <CustomInput
-            type="checkbox"
-            id="exampleCustomCheckbox2"
+            onChange={onChange}
+            type="radio"
+            id={string + "2"}
+            name={question}
+            value="Fair"
             label="Fair"
           />
           <CustomInput
-            type="checkbox"
-            id="exampleCustomCheckbox3"
+            onChange={onChange}
+            type="radio"
+            id={string + "3"}
+            name={question}
+            value="Poor"
             label="Poor"
           />
           <CustomInput
-            checked={parentCheckedNA}
-            type="checkbox"
-            id="exampleCustomCheckbox4"
+            onChange={onChange}
+            name={question}
+            type="radio"
+            id={string + "4"}
+            value="N/A"
             label="N/A"
           />
         </div>
