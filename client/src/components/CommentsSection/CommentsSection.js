@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useContext } from "react";
+import React, { useCallback, useEffect, useContext, useState } from "react";
 import {
   ImageUploadContext,
   CommentsContext,
@@ -7,12 +7,10 @@ import {
 import styles from "./commentssection.module.css";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
-require("dotenv").config();
-const REACT_APP_API_KEY = process.env.REACT_APP_API_KEY;
-const REACT_APP_PRESET = process.env.REACT_APP_PRESET;
-const REACT_APP_SIGNATURE = process.env.REACT_APP_SIGNATURE;
 
 function ImageUploader({ title, name }) {
+  const [errors, setErrors] = useState(false);
+  const [wrongFile, setWrongFile] = useState(false);
   const [isLoading, setIsLoading] = useContext(LoadingContext);
   const [comments, setComments] = useContext(CommentsContext);
   const [files, setFiles] = useContext(ImageUploadContext);
@@ -26,26 +24,24 @@ function ImageUploader({ title, name }) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Accept", "application/json");
+    headers.append("Origin", "http://localhost:3000");
+    setWrongFile(false);
+    setErrors(false);
     setIsLoading(true);
     axios({
       method: "get",
       url: file, // blob url eg. blob:http://127.0.0.1:8000/e89c5d87-a634-4540-974c-30dc476825cc
       responseType: "blob",
     }).then(function (response) {
-      var reader = new FileReader();
+      const reader = new FileReader();
       reader.readAsDataURL(response.data);
       reader.onloadend = function () {
-        var base64data = reader.result;
-        const formData = new FormData();
-        formData.append("file", base64data);
-        formData.append("api_key", REACT_APP_API_KEY);
-        // replace this with your upload preset name
-        formData.append("upload_preset", REACT_APP_PRESET);
+        const base64data = reader.result;
         axios({
           method: "POST",
           headers,
-          url: `https://api.cloudinary.com/v1_1/dgfbxfa67/upload/${REACT_APP_SIGNATURE}`,
-          data: formData,
+          url: `http://localhost:5000/api/uploadImage`,
+          data: base64data,
         })
           .then((res) => {
             const imageURL = res.data.url;
@@ -61,7 +57,7 @@ function ImageUploader({ title, name }) {
                 }));
           })
           .catch((err) => {
-            console.log(err);
+            if (err) setErrors(true);
           });
       };
     });
@@ -73,7 +69,15 @@ function ImageUploader({ title, name }) {
           preview: URL.createObjectURL(file),
         })
       );
-      getBlobData(mappedFiles[0].preview);
+      if (mappedFiles[0]) {
+        return getBlobData(mappedFiles[0].preview);
+      } else {
+        setErrors(false);
+        setWrongFile(true);
+      }
+      // return mappedFiles[0]
+      //   ? getBlobData(mappedFiles[0].preview)
+      //   : setWrongFile(true);
     },
     [files, name]
   );
@@ -86,7 +90,7 @@ function ImageUploader({ title, name }) {
     rejectedFiles,
   } = useDropzone({
     onDrop,
-    accept: "image/*",
+    accept: ".jpg,.png",
     minSize: 0,
     maxSize: 10000000,
   });
@@ -96,7 +100,6 @@ function ImageUploader({ title, name }) {
   useEffect(
     () => () => {
       // Make sure to revoke the data uris to avoid memory leaks
-      document.cookie = "promo_shown=1; Max-Age=2600000; SameSite=None; Secure";
       return files[name]
         ? files[name].forEach((file) => URL.revokeObjectURL(file.preview))
         : null;
@@ -110,6 +113,16 @@ function ImageUploader({ title, name }) {
       <div className={styles["UploadForm"]}>
         <div className={styles["UploadWrapper"]}>
           <h5>Upload photos of issues found in the {title}</h5>
+          {errors ? (
+            <p style={{ color: "blue" }}>
+              *Could not complete request. Please try another file*
+            </p>
+          ) : null}
+          {wrongFile ? (
+            <p style={{ color: "red" }}>
+              *Wrong file type please use .png, .jpg files only*
+            </p>
+          ) : null}
           <section className={styles["Container"]}>
             <div className={styles["ImageInput"]} {...getRootProps()}>
               <input {...getInputProps()} />

@@ -1,13 +1,29 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import StarRatings from "react-star-ratings";
 import styles from "./surveyform.module.css";
-import { StarRatingsContext } from "../../Store";
+import { StarRatingsContext, BelowThreeContext } from "../../Store";
 
 function SurveyForm() {
+  const [belowThreeText, setBelowThreeText] = useContext(BelowThreeContext);
+  const [belowThree, setBelowThree] = useState(false);
   const [starRatings, setStarRatings] = useContext(StarRatingsContext);
   const handleChange = (newRating, name) => {
     setStarRatings((state) => ({ ...state, [name]: newRating }));
   };
+  const checkBelowThreeStars = () => {
+    if (starRatings.six) {
+      return starRatings.six < 3 ? setBelowThree(true) : null;
+    } else {
+      setBelowThree(false);
+      return setBelowThreeText("");
+    }
+  };
+  const handleTextChange = (e) => {
+    setBelowThreeText(e.target.value);
+  };
+  useEffect(() => {
+    checkBelowThreeStars();
+  });
   return (
     <div>
       <h6>
@@ -81,6 +97,20 @@ function SurveyForm() {
         numberOfStars={5}
         name="six"
       />
+      <div>
+        {belowThree ? (
+          <div>
+            <h6 className={styles["ImproveArea"]}>
+              How could your experience be better?
+            </h6>
+            <textarea
+              value={belowThreeText}
+              onChange={handleTextChange}
+              className={styles["BelowThreeRating"]}
+            />
+          </div>
+        ) : null}
+      </div>
     </div>
   );
 }

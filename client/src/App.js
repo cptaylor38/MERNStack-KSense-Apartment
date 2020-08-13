@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import styles from "./App.module.css";
 import DocumentTitle from "react-document-title";
 import MoveInForm from "./pages/MoveInForm";
 import NoMatch from "./components/NoMatch";
-import Store from "./Store";
+import Store, { EmailContext } from "./Store";
 import axios from "axios";
 
 function App() {
+  const [logo, setLogo] = useState("");
+  const [link, setLink] = useState("");
+  const [email, setEmail] = useState("");
   const [state, setState] = useState(false);
 
   //Title Case
@@ -20,21 +23,28 @@ function App() {
   //checking if client exists in DB
   const renderMoveIn = (routerProps) => {
     const apartmentName = routerProps.match.params.apartment.toLowerCase();
-    // let headers = new Headers();
-    // headers.append("Content-Type", "application/json");
-    // headers.append("Accept", "application/json");
-    // headers.append("Origin", "http://localhost:3000");
-
+    let headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
+    headers.append("Origin", "http://localhost:3000");
     axios
-      .get(`api/${apartmentName}`)
+      .get(`http://localhost:5000/api/${apartmentName}`, headers)
       .then((res) => {
+        const response = res.data[0];
+        setLogo(response.logo);
+        setLink(response.link);
+        setEmail(response.email);
         setState(true);
       })
       .catch((error) => {
         console.log(error);
       });
     const Apartment = apartmentName.toProperCase();
-    return state ? <MoveInForm Apartment={Apartment} /> : <NoMatch />;
+    return state ? (
+      <MoveInForm Logo={logo} Link={link} Email={email} Apartment={Apartment} />
+    ) : (
+      <NoMatch />
+    );
   };
   useEffect(() => {}, [state]);
   return (

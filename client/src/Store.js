@@ -56,8 +56,10 @@ export const ContactInfoContext = React.createContext({});
 export const KeysFormContext = React.createContext({});
 export const FormAnswersContext = React.createContext({});
 export const LoadingContext = React.createContext(true);
+export const BelowThreeContext = React.createContext("");
 
 function Store({ children }) {
+  const [belowThreeText, setBelowThreeText] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [formQuestions, setFormQuestions] = useState({});
   const [formAnswers, setFormAnswers] = useState({});
@@ -183,16 +185,6 @@ function Store({ children }) {
   const [files, setFiles] = useState({});
   const [starRatings, setStarRatings] = useState({});
   const [signatureFormImages, setSignatureFormImages] = useState([]);
-  const [otherAreasFormAnswers, setOtherAreasFormAnswers] = useState({});
-  const [livingRoomFormAnswers, setLivingRoomFormAnswers] = useState({});
-  const [diningRoomFormAnswers, setDiningRoomFormAnswers] = useState({});
-  const [bedThreeFormAnswers, setBedThreeFormAnswers] = useState({});
-  const [bedTwoFormAnswers, setBedTwoFormAnswers] = useState({});
-  const [bedOneFormAnswers, setBedOneFormAnswers] = useState({});
-  const [bathTwoFormAnswers, setBathTwoFormAnswers] = useState({});
-  const [bathOneFormAnswers, setBathOneFormAnswers] = useState({});
-  const [appliancesFormAnswers, setAppliancesFormAnswers] = useState({});
-  const [kitchenFormAnswers, setKitchenFormAnswers] = useState({});
   const [kitchenCheckedGood, setKitchenCheckedGood] = useState(false);
   const [kitchenCheckedNA, setKitchenCheckedNA] = useState(false);
   const [applianceCheckedGood, setApplianceCheckedGood] = useState(false);
@@ -207,7 +199,6 @@ function Store({ children }) {
   const [bedroomTwoCheckedNA, setBedroomTwoCheckedNA] = useState(false);
   const [bedroomThreeCheckedGood, setBedroomThreeCheckedGood] = useState(false);
   const [bedroomThreeCheckedNA, setBedroomThreeCheckedNA] = useState(false);
-  //not added yet
   const [otherAreasCheckedGood, setOtherAreasCheckedGood] = useState(false);
   const [otherAreasCheckedNA, setOtherAreasCheckedNA] = useState(false);
   const [bathroomOneCheckedGood, setBathroomOneCheckedGood] = useState(false);
@@ -217,176 +208,180 @@ function Store({ children }) {
   const [clicked, setClicked] = useState("");
 
   return (
-    <LoadingContext.Provider value={[isLoading, setIsLoading]}>
-      <FormAnswersContext.Provider value={[formAnswers, setFormAnswers]}>
-        <KeysFormContext.Provider value={[keysFormAnswers, setKeysFormAnswers]}>
-          <ContactInfoContext.Provider value={[contactInfo, setContactInfo]}>
-            <CommentsContext.Provider value={[comments, setComments]}>
-              <ImageUploadContext.Provider value={[files, setFiles]}>
-                <StarRatingsContext.Provider
-                  value={[starRatings, setStarRatings]}
-                >
-                  <FormQuestionsContext.Provider
-                    value={[formQuestions, setFormQuestions]}
+    <BelowThreeContext.Provider value={[belowThreeText, setBelowThreeText]}>
+      <LoadingContext.Provider value={[isLoading, setIsLoading]}>
+        <FormAnswersContext.Provider value={[formAnswers, setFormAnswers]}>
+          <KeysFormContext.Provider
+            value={[keysFormAnswers, setKeysFormAnswers]}
+          >
+            <ContactInfoContext.Provider value={[contactInfo, setContactInfo]}>
+              <CommentsContext.Provider value={[comments, setComments]}>
+                <ImageUploadContext.Provider value={[files, setFiles]}>
+                  <StarRatingsContext.Provider
+                    value={[starRatings, setStarRatings]}
                   >
-                    <SignatureFormContext.Provider
-                      value={[signatureFormImages, setSignatureFormImages]}
+                    <FormQuestionsContext.Provider
+                      value={[formQuestions, setFormQuestions]}
                     >
-                      <KitchenGoodContext.Provider
-                        value={[kitchenCheckedGood, setKitchenCheckedGood]}
+                      <SignatureFormContext.Provider
+                        value={[signatureFormImages, setSignatureFormImages]}
                       >
-                        <KitchenNAContext.Provider
-                          value={[kitchenCheckedNA, setKitchenCheckedNA]}
+                        <KitchenGoodContext.Provider
+                          value={[kitchenCheckedGood, setKitchenCheckedGood]}
                         >
-                          <ApplianceGoodContext.Provider
-                            value={[
-                              applianceCheckedGood,
-                              setApplianceCheckedGood,
-                            ]}
+                          <KitchenNAContext.Provider
+                            value={[kitchenCheckedNA, setKitchenCheckedNA]}
                           >
-                            <ApplianceNAContext.Provider
+                            <ApplianceGoodContext.Provider
                               value={[
-                                applianceCheckedNA,
-                                setApplianceCheckedNA,
+                                applianceCheckedGood,
+                                setApplianceCheckedGood,
                               ]}
                             >
-                              <LivingRoomGoodContext.Provider
+                              <ApplianceNAContext.Provider
                                 value={[
-                                  livingRoomCheckedGood,
-                                  setLivingRoomCheckedGood,
+                                  applianceCheckedNA,
+                                  setApplianceCheckedNA,
                                 ]}
                               >
-                                <LivingRoomNAContext.Provider
+                                <LivingRoomGoodContext.Provider
                                   value={[
-                                    livingRoomCheckedNA,
-                                    setLivingRoomCheckedNA,
+                                    livingRoomCheckedGood,
+                                    setLivingRoomCheckedGood,
                                   ]}
                                 >
-                                  <ClickedContext.Provider
-                                    value={[clicked, setClicked]}
+                                  <LivingRoomNAContext.Provider
+                                    value={[
+                                      livingRoomCheckedNA,
+                                      setLivingRoomCheckedNA,
+                                    ]}
                                   >
-                                    <DiningRoomGoodContext.Provider
-                                      value={[
-                                        diningRoomCheckedGood,
-                                        setDiningRoomCheckedGood,
-                                      ]}
+                                    <ClickedContext.Provider
+                                      value={[clicked, setClicked]}
                                     >
-                                      <DiningRoomNAContext.Provider
+                                      <DiningRoomGoodContext.Provider
                                         value={[
-                                          diningRoomCheckedNA,
-                                          setDiningRoomCheckedNA,
+                                          diningRoomCheckedGood,
+                                          setDiningRoomCheckedGood,
                                         ]}
                                       >
-                                        <BedroomOneGoodContext.Provider
+                                        <DiningRoomNAContext.Provider
                                           value={[
-                                            bedroomOneCheckedGood,
-                                            setBedroomOneCheckedGood,
+                                            diningRoomCheckedNA,
+                                            setDiningRoomCheckedNA,
                                           ]}
                                         >
-                                          <BedroomOneNAContext.Provider
+                                          <BedroomOneGoodContext.Provider
                                             value={[
-                                              bedroomOneCheckedNA,
-                                              setBedroomOneCheckedNA,
+                                              bedroomOneCheckedGood,
+                                              setBedroomOneCheckedGood,
                                             ]}
                                           >
-                                            <BedroomTwoGoodContext.Provider
+                                            <BedroomOneNAContext.Provider
                                               value={[
-                                                bedroomTwoCheckedGood,
-                                                setBedroomTwoCheckedGood,
+                                                bedroomOneCheckedNA,
+                                                setBedroomOneCheckedNA,
                                               ]}
                                             >
-                                              <BedroomTwoNAContext.Provider
+                                              <BedroomTwoGoodContext.Provider
                                                 value={[
-                                                  bedroomTwoCheckedNA,
-                                                  setBedroomTwoCheckedNA,
+                                                  bedroomTwoCheckedGood,
+                                                  setBedroomTwoCheckedGood,
                                                 ]}
                                               >
-                                                <BedroomThreeGoodContext.Provider
+                                                <BedroomTwoNAContext.Provider
                                                   value={[
-                                                    bedroomThreeCheckedGood,
-                                                    setBedroomThreeCheckedGood,
+                                                    bedroomTwoCheckedNA,
+                                                    setBedroomTwoCheckedNA,
                                                   ]}
                                                 >
-                                                  <BedroomThreeNAContext.Provider
+                                                  <BedroomThreeGoodContext.Provider
                                                     value={[
-                                                      bedroomThreeCheckedNA,
-                                                      setBedroomThreeCheckedNA,
+                                                      bedroomThreeCheckedGood,
+                                                      setBedroomThreeCheckedGood,
                                                     ]}
                                                   >
-                                                    <OtherAreasGoodContext.Provider
+                                                    <BedroomThreeNAContext.Provider
                                                       value={[
-                                                        otherAreasCheckedGood,
-                                                        setOtherAreasCheckedGood,
+                                                        bedroomThreeCheckedNA,
+                                                        setBedroomThreeCheckedNA,
                                                       ]}
                                                     >
-                                                      <OtherAreasNAContext.Provider
+                                                      <OtherAreasGoodContext.Provider
                                                         value={[
-                                                          otherAreasCheckedNA,
-                                                          setOtherAreasCheckedNA,
+                                                          otherAreasCheckedGood,
+                                                          setOtherAreasCheckedGood,
                                                         ]}
                                                       >
-                                                        <BathroomOneGoodContext.Provider
+                                                        <OtherAreasNAContext.Provider
                                                           value={[
-                                                            bathroomOneCheckedGood,
-                                                            setBathroomOneCheckedGood,
+                                                            otherAreasCheckedNA,
+                                                            setOtherAreasCheckedNA,
                                                           ]}
                                                         >
-                                                          <BathroomOneNAContext.Provider
+                                                          <BathroomOneGoodContext.Provider
                                                             value={[
-                                                              bathroomOneCheckedNA,
-                                                              setBathroomOneCheckedNA,
+                                                              bathroomOneCheckedGood,
+                                                              setBathroomOneCheckedGood,
                                                             ]}
                                                           >
-                                                            <BathroomTwoGoodContext.Provider
+                                                            <BathroomOneNAContext.Provider
                                                               value={[
-                                                                bathroomTwoCheckedGood,
-                                                                setBathroomTwoCheckedGood,
+                                                                bathroomOneCheckedNA,
+                                                                setBathroomOneCheckedNA,
                                                               ]}
                                                             >
-                                                              <BathroomTwoNAContext.Provider
+                                                              <BathroomTwoGoodContext.Provider
                                                                 value={[
-                                                                  bathroomTwoCheckedNA,
-                                                                  setBathroomTwoCheckedNA,
+                                                                  bathroomTwoCheckedGood,
+                                                                  setBathroomTwoCheckedGood,
                                                                 ]}
                                                               >
-                                                                <FormSectionsContext.Provider
+                                                                <BathroomTwoNAContext.Provider
                                                                   value={[
-                                                                    formSections,
-                                                                    setFormSections,
+                                                                    bathroomTwoCheckedNA,
+                                                                    setBathroomTwoCheckedNA,
                                                                   ]}
                                                                 >
-                                                                  {children}
-                                                                </FormSectionsContext.Provider>
-                                                              </BathroomTwoNAContext.Provider>
-                                                            </BathroomTwoGoodContext.Provider>
-                                                          </BathroomOneNAContext.Provider>
-                                                        </BathroomOneGoodContext.Provider>
-                                                      </OtherAreasNAContext.Provider>
-                                                    </OtherAreasGoodContext.Provider>
-                                                  </BedroomThreeNAContext.Provider>
-                                                </BedroomThreeGoodContext.Provider>
-                                              </BedroomTwoNAContext.Provider>
-                                            </BedroomTwoGoodContext.Provider>
-                                          </BedroomOneNAContext.Provider>
-                                        </BedroomOneGoodContext.Provider>
-                                      </DiningRoomNAContext.Provider>
-                                    </DiningRoomGoodContext.Provider>
-                                  </ClickedContext.Provider>
-                                </LivingRoomNAContext.Provider>
-                              </LivingRoomGoodContext.Provider>
-                            </ApplianceNAContext.Provider>
-                          </ApplianceGoodContext.Provider>
-                        </KitchenNAContext.Provider>
-                      </KitchenGoodContext.Provider>
-                    </SignatureFormContext.Provider>
-                  </FormQuestionsContext.Provider>
-                </StarRatingsContext.Provider>
-              </ImageUploadContext.Provider>
-            </CommentsContext.Provider>
-          </ContactInfoContext.Provider>
-        </KeysFormContext.Provider>
-      </FormAnswersContext.Provider>
-    </LoadingContext.Provider>
+                                                                  <FormSectionsContext.Provider
+                                                                    value={[
+                                                                      formSections,
+                                                                      setFormSections,
+                                                                    ]}
+                                                                  >
+                                                                    {children}
+                                                                  </FormSectionsContext.Provider>
+                                                                </BathroomTwoNAContext.Provider>
+                                                              </BathroomTwoGoodContext.Provider>
+                                                            </BathroomOneNAContext.Provider>
+                                                          </BathroomOneGoodContext.Provider>
+                                                        </OtherAreasNAContext.Provider>
+                                                      </OtherAreasGoodContext.Provider>
+                                                    </BedroomThreeNAContext.Provider>
+                                                  </BedroomThreeGoodContext.Provider>
+                                                </BedroomTwoNAContext.Provider>
+                                              </BedroomTwoGoodContext.Provider>
+                                            </BedroomOneNAContext.Provider>
+                                          </BedroomOneGoodContext.Provider>
+                                        </DiningRoomNAContext.Provider>
+                                      </DiningRoomGoodContext.Provider>
+                                    </ClickedContext.Provider>
+                                  </LivingRoomNAContext.Provider>
+                                </LivingRoomGoodContext.Provider>
+                              </ApplianceNAContext.Provider>
+                            </ApplianceGoodContext.Provider>
+                          </KitchenNAContext.Provider>
+                        </KitchenGoodContext.Provider>
+                      </SignatureFormContext.Provider>
+                    </FormQuestionsContext.Provider>
+                  </StarRatingsContext.Provider>
+                </ImageUploadContext.Provider>
+              </CommentsContext.Provider>
+            </ContactInfoContext.Provider>
+          </KeysFormContext.Provider>
+        </FormAnswersContext.Provider>
+      </LoadingContext.Provider>
+    </BelowThreeContext.Provider>
   );
 }
 

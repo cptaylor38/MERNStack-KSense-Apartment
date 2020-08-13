@@ -6,6 +6,8 @@ const path = require("path");
 const mongoose = require("mongoose");
 const nodemailer = require("nodemailer");
 const pdf = require("html-pdf");
+const cloudinary = require("cloudinary").v2;
+var cors = require("cors");
 const {
   SECRET_KEY,
   URI,
@@ -19,9 +21,23 @@ const port = process.env.PORT || 5000;
 
 const pdfTemplate = require("./PDFTemplate/pdfTemplate");
 
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.CLOUD_API_KEY,
+  api_secret: process.env.CLOUD_SECRET,
+  upload_preset: "images",
+});
+
 //middleware
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
+app.use(cors());
 
 //db
 mongoose.connect(URI, {
@@ -65,7 +81,141 @@ const transporter = nodemailer.createTransport({
 
 // API calls
 app.post(`/api/create/${SECRET_KEY}`, async (req, res) => {
-  const client = new Apartment(req.body);
+  const client = req.body.bathone
+    ? new Apartment(req.body)
+    : new Apartment({
+        apartment: req.body.apartment,
+        email: req.body.email,
+        appliances: [
+          "Stove",
+          "Range Hood",
+          "Refrigerator",
+          "Dishwasher",
+          "Microwave",
+          "Washing Maching",
+          "Dryer",
+          "Other",
+        ],
+        bathone: [
+          "Walls and Ceilings",
+          "Floor/Floor Covering",
+          "Counters",
+          "Sink, Faucet",
+          "Shower/Tub, Faucet",
+          "Drains, Plumbing",
+          "Shower Door",
+          "Toilet, Seat",
+          "Caulking",
+          "Towel Rack(s)",
+          "Medicine Cab/Mirror",
+          "Exhaust Fan",
+          "Cabinet/Linen Closet",
+          "Light Fixture(s), Bulb(s)",
+          "Light Switches, Outlets",
+          "Linen Closet/Cabinet",
+          "Door & Door Hardware",
+          "Window(s) & Screen(s)",
+          "Other",
+        ],
+        bathtwo: [
+          "Walls and Ceilings",
+          "Floor/Floor Covering",
+          "Counters",
+          "Counters",
+          "Shower/Tub, Faucet",
+          "Drains, Plumbing",
+          "Shower Door",
+          "Toilet, Seat",
+          "Caulking",
+          "Towel Rack(s)",
+          "Medicine Cab/Mirror",
+          "Exhaust Fan",
+          "Cabinet/Linen Closet",
+          "Light Fixture(s), Bulb(s)",
+          "Light Switches, Outlets",
+          "Linen Closet/Cabinet",
+          "Door & Door Hardware",
+          "Window(s) & Screen(s)",
+          "Other",
+        ],
+        bedone: [
+          "Walls and Ceilings",
+          "Floor/Floor Covering",
+          "Light Switches, Outlets",
+          "Closet Door(s)",
+          "Door & Door Hardware",
+          "Window(s) & Screen(s)",
+          "Furniture (if any)",
+          "Other",
+        ],
+        bedtwo: [
+          "Walls and Ceilings",
+          "Floor/Floor Covering",
+          "Light Switches, Outlets",
+          "Closet Door(s)",
+          "Door & Door Hardware",
+          "Window(s) & Screen(s)",
+          "Furniture (if any)",
+          "Other",
+        ],
+        bedthree: [
+          "Walls and Ceilings",
+          "Floor/Floor Covering",
+          "Light Switches, Outlets",
+          "Closet Door(s)",
+          "Door & Door Hardware",
+          "Window(s) & Screen(s)",
+          "Furniture (if any)",
+          "Other",
+        ],
+        dining: [
+          "Walls and Ceilings",
+          "Floor/Floor Covering",
+          "Light Switches, Outlets",
+          "Light Fixture(s), Bulb(s)",
+          "Door & Door Hardware",
+          "Window(s) & Screen(s)",
+          "Furniture (if any)",
+          "Other",
+        ],
+        kitchen: [
+          "Walls and Ceilings",
+          "Floor/Floor Covering",
+          "Counters",
+          "Sink, Faucet",
+          "Drain, Plumbing",
+          "Garbage Disposal",
+          "Light Fixture(s), Bulb(s)",
+          "Light Switches, Outlets",
+          "Door & Door Hardware",
+          "Window(s) & Screens(s)",
+          "Cabinets",
+          "Other",
+        ],
+        living: [
+          "Walls and Ceilings",
+          "Floor/Floor Covering",
+          "Light Fixture(s), Bulb(s)",
+          "Light Switches, Outlets",
+          "Closet Door(s)",
+          "Door & Door Hardware",
+          "Window(s) & Screens(s)",
+          "Furniture (if any)",
+          "Other",
+        ],
+        other: [
+          "Entry Door(s)",
+          "Furnace/Heater",
+          "Air Conditioning",
+          "Fireplace",
+          "Balcony, Patio, Terrace",
+          "Lawn, Ground Covering",
+          "Garage or Parking Area",
+          "Storage",
+          "Water Heater",
+          "Other",
+        ],
+      });
   const { apartment } = req.body;
   try {
     const data = await Apartment.findOne({ apartment });
@@ -136,8 +286,9 @@ app.get("/api/:apartment", async (req, res) => {
 
 app.post("/api/submitform", async (req, res) => {
   const mailOptions = {
-    from: "grayson.mcmurry23@gmail.com",
+    from: SERVER_EMAIL,
     to: req.body.contact.email,
+    cc: req.body.email,
     subject: "Tenant Form",
     attachments: [
       {
@@ -158,6 +309,24 @@ app.post("/api/submitform", async (req, res) => {
       else console.log("email sent");
     });
   });
+});
+
+app.post("/api/uploadImage", async (req, res, next) => {
+  try {
+    const array = Object.keys(req.body);
+    const base64String = array[0];
+    const string = base64String.replace(/ /g, "+");
+    console.log(string);
+    const uploadResponse = await cloudinary.uploader.upload(string, {
+      format: "jpg",
+      upload_preset: "images",
+    });
+    console.log(uploadResponse);
+    await res.json(uploadResponse);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send(error);
+  }
 });
 
 if (process.env.NODE_ENV === "production") {

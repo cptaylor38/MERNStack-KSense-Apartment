@@ -14,15 +14,16 @@ import {
   KeysFormContext,
   SignatureFormContext,
   LoadingContext,
+  BelowThreeContext,
 } from "../Store";
 import axios from "axios";
 
-// const headers = new Headers();
-// headers.append("Content-Type", "application/json");
-// headers.append("Accept", "application/json");
-// headers.append("Origin", "http://localhost:3000");
+const headers = new Headers();
+headers.append("Content-Type", "application/json");
+headers.append("Accept", "application/json");
+headers.append("Origin", "http://localhost:3000");
 
-export default function MoveInForm({ Apartment }) {
+export default function MoveInForm({ Logo, Link, Email, Apartment }) {
   const [complete, setComplete] = useState(true);
   //--------to be sent to server------------
   const [signatureFormImages, setSignatureFormImages] = useContext(
@@ -34,6 +35,7 @@ export default function MoveInForm({ Apartment }) {
   const [files, setFiles] = useContext(ImageUploadContext);
   const [contactInfo, setContactInfo] = useContext(ContactInfoContext);
   const [keysFormAnswers, setKeysFormAnswers] = useContext(KeysFormContext);
+  const [belowThreeText, setBelowThreeText] = useContext(BelowThreeContext);
   //-----------end sent to server------------
   const [isLoading, setIsLoading] = useContext(LoadingContext);
   const [formQuestions, setFormQuestions] = useContext(FormQuestionsContext);
@@ -49,28 +51,28 @@ export default function MoveInForm({ Apartment }) {
     e.preventDefault();
     setIsLoading(true);
     if (
-      !contactInfo.fname.length
-      // !contactInfo.lname.length ||
-      // !contactInfo.email.length ||
-      // !contactInfo.phone.length ||
-      // !contactInfo.nunit.length ||
-      // !contactInfo.address.length ||
-      // !contactInfo.cunit.length ||
-      // !contactInfo.city.length ||
-      // !contactInfo.state.length ||
-      // !contactInfo.zip.length ||
-      // !signatureFormImages.length ||
-      // !formAnswers.appliances.length ||
-      // !formAnswers.bathone ||
-      // !formAnswers.bathtwo ||
-      // !formAnswers.bedone ||
-      // !formAnswers.bedtwo ||
-      // !formAnswers.bedthree ||
-      // !formAnswers.dining ||
-      // !formAnswers.kitchen ||
-      // !formAnswers.living ||
-      // !formAnswers.other ||
-      // !keysFormAnswers
+      !contactInfo.fname.length ||
+      !contactInfo.lname.length ||
+      !contactInfo.email.length ||
+      !contactInfo.phone.length ||
+      !contactInfo.nunit.length ||
+      !contactInfo.address.length ||
+      !contactInfo.cunit.length ||
+      !contactInfo.city.length ||
+      !contactInfo.state.length ||
+      !contactInfo.zip.length ||
+      !signatureFormImages.length ||
+      !formAnswers.appliances.length ||
+      !formAnswers.bathone ||
+      !formAnswers.bathtwo ||
+      !formAnswers.bedone ||
+      !formAnswers.bedtwo ||
+      !formAnswers.bedthree ||
+      !formAnswers.dining ||
+      !formAnswers.kitchen ||
+      !formAnswers.living ||
+      !formAnswers.other ||
+      !keysFormAnswers
     ) {
       setComplete(false);
       setIsLoading(false);
@@ -78,8 +80,12 @@ export default function MoveInForm({ Apartment }) {
     } else {
       await axios({
         method: "post",
-        url: "api/submitform",
+        url: "http://localhost:5000/api/submitform",
         data: {
+          logo: Logo,
+          abovethreestars: Link,
+          belowthreestars: belowThreeText,
+          email: Email,
           contact: contactInfo,
           appliances: formAnswers.appliances,
           bathone: formAnswers.bathone,
@@ -129,7 +135,10 @@ export default function MoveInForm({ Apartment }) {
             timeout={3000} //3 secs
           />
         ) : null}
-        <h1>{Apartment} Move-in Form</h1>
+        <div className={styles["FormHeader"]}>
+          <img style={{ height: "75px" }} src={`${Logo}`} alt="apartment" />
+          <h1>{Apartment} Move-in Form</h1>
+        </div>
         {state.map((index, value) => {
           return (
             <div key={value}>

@@ -14,7 +14,12 @@ module.exports = ({
   comments,
   keys,
   files,
+  abovethreestars,
+  belowthreestars,
 }) => {
+  const aboveThreeStarsOrBelow = belowthreestars.length
+    ? `<div><h5>Customer review:</h5>${belowthreestars}</div>`
+    : `<div><a href="${abovethreestars}">Review Us!</div>`;
   const frontDoorKeys = keys.fdkeys ? keys.fdkeys : "0";
   const deadBoltKeys = keys.dbkeys ? keys.dbkeys : "0";
   const mailboxKeys = keys.mbkeys ? keys.mbkeys : "0";
@@ -967,9 +972,9 @@ module.exports = ({
                       "
                     >
                       <span style="color: #000000;"
-                        >Date: ${`${today.getDate()}-${
+                        >Date: ${
                           today.getMonth() + 1
-                        }-${today.getFullYear()}`}</span
+                        }-${`${today.getDate()}-${today.getFullYear()}`}</span
                       >
                     </p>
                   </div>
@@ -1951,17 +1956,126 @@ module.exports = ({
               word-wrap: break-word;
               word-break: break-word;
             "
-          >
-            <p>Quantity of Front Door Keys Issued: ${frontDoorKeys}</p>
-            <p>Quantity of Dead Bolt Keys Issued: ${deadBoltKeys}</p>
-            <p>Quantity of Mailbox Keys Issued: ${mailboxKeys}</p>
-            <p>Quantity of Common Area Keys Issued: ${commonKeys}</p>
-            <p>Quantity of Remotes Issued: ${remoteKeys}</p>
-            <p>Quantity of other objects Issued: ${otherObjectKeys}</p>
-            <p>What other objects have been issued?: ${otherObjects}</p>
+          ><p
+          class="size-16"
+          style="
+            margin: 0 auto;
+            max-width: 600px;
+            min-width: 320px;
+            width: 320px;
+            width: calc(28000% - 167400px);
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+          "
+          lang="x-size-16"
+        >
+          <strong><span style="color: #000000;">Keys</span></strong>
+        </p>
+            <div
+                class="column"
+                style="
+                  text-align: left;
+                  color: #8e959c;
+                  font-size: 14px;
+                  line-height: 21px;
+                  font-family: sans-serif;
+                "
+              >
+                <p>Quantity of Front Door Keys Issued: ${frontDoorKeys}</p>
+            </div>
+            <div
+                class="column"
+                style="
+                  text-align: left;
+                  color: #8e959c;
+                  font-size: 14px;
+                  line-height: 21px;
+                  font-family: sans-serif;
+                "
+              >
+                <p>Quantity of Dead Bolt Keys Issued: ${deadBoltKeys}</p>
+            </div>
+            <div
+                class="column"
+                style="
+                  text-align: left;
+                  color: #8e959c;
+                  font-size: 14px;
+                  line-height: 21px;
+                  font-family: sans-serif;
+                "
+              >
+                <p>Quantity of Mailbox Keys Issued: ${mailboxKeys}</p>
+            </div>
+            <div
+                class="column"
+                style="
+                  text-align: left;
+                  color: #8e959c;
+                  font-size: 14px;
+                  line-height: 21px;
+                  font-family: sans-serif;
+                "
+              >
+                <p>Quantity of Common Area Keys Issued: ${commonKeys}</p>
+            </div>
+            <div
+                class="column"
+                style="
+                  text-align: left;
+                  color: #8e959c;
+                  font-size: 14px;
+                  line-height: 21px;
+                  font-family: sans-serif;
+                "
+              >
+                <p>Quantity of Remotes Issued: ${remoteKeys}</p>
+            </div>
+            <div
+                class="column"
+                style="
+                  text-align: left;
+                  color: #8e959c;
+                  font-size: 14px;
+                  line-height: 21px;
+                  font-family: sans-serif;
+                "
+              >
+                <p>Quantity of other objects Issued: ${otherObjectKeys}</p>
+            </div>
+            <div
+                class="column"
+                style="
+                  text-align: left;
+                  color: #8e959c;
+                  font-size: 14px;
+                  line-height: 21px;
+                  font-family: sans-serif;
+                "
+              >
+                <p>What other objects have been issued?: ${otherObjects}</p>
+            </div>
               <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
             </div>
           </div>
+          <p
+                class="size-16"
+                style="
+                  margin: 0 auto;
+                  max-width: 600px;
+                  min-width: 320px;
+                  width: 320px;
+                  width: calc(28000% - 167400px);
+                  overflow-wrap: break-word;
+                  word-wrap: break-word;
+                  word-break: break-word;
+                "
+                lang="x-size-16"
+              >
+                <strong><span style="color: #000000;">Stars (1-5)</span></strong>
+              </p>
+
               <p>
                 Was the office team friendly and helpful? ${starOne}
               </p>
@@ -1980,6 +2094,8 @@ module.exports = ({
       <p className={styles["Question"]}>
         Overall, how satisfied are you with your new apartment? ${starSix}
       </p>
+
+      <div>${aboveThreeStarsOrBelow}</div>
               <!--[if (mso)|(IE)]></td></tr></table><![endif]-->
             </div>
           </div>
