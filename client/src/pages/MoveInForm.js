@@ -136,7 +136,10 @@ export default function MoveInForm({ Logo, Link, Email, Apartment }) {
           />
         ) : null}
         <div className={styles["FormHeader"]}>
-          <img style={{ height: "75px" }} src={`${Logo}`} alt="apartment" />
+          {Logo.length ? (
+            <img style={{ height: "75px" }} src={`${Logo}`} alt="apartment" />
+          ) : null}
+
           <h1>{Apartment} Move-in Form</h1>
         </div>
         {state.map((index, value) => {
