@@ -27,6 +27,7 @@ function ImageUploader({ title, name }) {
     headers.append("Content-Type", "application/json");
     headers.append("Accept", "application/json");
     headers.append("Origin", "https://cloudinary.com");
+    headers.append("Access-Control-Allow-Origin", "*");
     setIsLoading(true);
     axios({
       method: "get",
