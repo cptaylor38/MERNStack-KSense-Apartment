@@ -31,11 +31,8 @@ function ImageUploader({ title, name }) {
         formData.append("api_key", REACT_APP_API_KEY);
         // replace this with your upload preset name
         formData.append("upload_preset", REACT_APP_PRESET);
-        const header = (document.cookie =
-          "promo_shown=1; Max-Age=2600000; SameSite=None; Secure");
         axios({
           method: "POST",
-          headers: header,
           url: "https://api.cloudinary.com/v1_1/dgfbxfa67/upload",
           data: formData,
         })
