@@ -24,7 +24,7 @@ function ImageUploader({ title, name }) {
     const headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Accept", "application/json");
-    headers.append("Origin", "http://localhost:3000");
+    headers.append("Origin", "*");
     setWrongFile(false);
     setErrors(false);
     setIsLoading(true);
@@ -40,7 +40,7 @@ function ImageUploader({ title, name }) {
         axios({
           method: "POST",
           headers,
-          url: `http://localhost:5000/api/uploadImage`,
+          url: `api/uploadImage`,
           data: base64data,
         })
           .then((res) => {
@@ -75,9 +75,6 @@ function ImageUploader({ title, name }) {
         setErrors(false);
         setWrongFile(true);
       }
-      // return mappedFiles[0]
-      //   ? getBlobData(mappedFiles[0].preview)
-      //   : setWrongFile(true);
     },
     [files, name]
   );

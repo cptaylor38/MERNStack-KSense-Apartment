@@ -26,9 +26,9 @@ function App() {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
     headers.append("Accept", "application/json");
-    headers.append("Origin", "http://localhost:3000");
+    headers.append("Origin", "*");
     axios
-      .get(`http://localhost:5000/api/${apartmentName}`, headers)
+      .get(`api/${apartmentName}`, headers)
       .then((res) => {
         const response = res.data[0];
         setLogo(response.logo);

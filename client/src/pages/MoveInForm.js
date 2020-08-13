@@ -21,7 +21,7 @@ import axios from "axios";
 const headers = new Headers();
 headers.append("Content-Type", "application/json");
 headers.append("Accept", "application/json");
-headers.append("Origin", "http://localhost:3000");
+headers.append("Origin", "*");
 
 export default function MoveInForm({ Logo, Link, Email, Apartment }) {
   const [complete, setComplete] = useState(true);
@@ -80,7 +80,7 @@ export default function MoveInForm({ Logo, Link, Email, Apartment }) {
     } else {
       await axios({
         method: "post",
-        url: "http://localhost:5000/api/submitform",
+        url: "api/submitform",
         data: {
           logo: Logo,
           abovethreestars: Link,
