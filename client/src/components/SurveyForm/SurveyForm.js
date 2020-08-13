@@ -12,7 +12,7 @@ function SurveyForm() {
   };
   const checkBelowThreeStars = () => {
     if (starRatings.six) {
-      return starRatings.six < 3 ? setBelowThree(true) : null;
+      return starRatings.six < 3 ? setBelowThree(true) : setBelowThree(false);
     } else {
       setBelowThree(false);
       return setBelowThreeText("");
