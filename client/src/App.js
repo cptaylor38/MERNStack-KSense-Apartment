@@ -20,12 +20,12 @@ function App() {
   //checking if client exists in DB
   const renderMoveIn = (routerProps) => {
     const apartmentName = routerProps.match.params.apartment.toLowerCase();
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Accept", "application/json");
-    headers.append("Origin", "http://localhost:3000");
+    // let headers = new Headers();
+    // headers.append("Content-Type", "application/json");
+    // headers.append("Accept", "application/json");
+    // headers.append("Origin", "http://localhost:3000");
     axios
-      .get(`http://localhost:5000/api/${apartmentName}`, headers)
+      .get(`api/${apartmentName}`)
       .then((res) => {
         setState(true);
       })

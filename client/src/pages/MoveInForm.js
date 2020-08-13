@@ -16,10 +16,10 @@ import {
 } from "../Store";
 import axios from "axios";
 
-const headers = new Headers();
-headers.append("Content-Type", "application/json");
-headers.append("Accept", "application/json");
-headers.append("Origin", "http://localhost:3000");
+// const headers = new Headers();
+// headers.append("Content-Type", "application/json");
+// headers.append("Accept", "application/json");
+// headers.append("Origin", "http://localhost:3000");
 
 export default function MoveInForm({ Apartment }) {
   const [complete, setComplete] = useState(true);
@@ -39,10 +39,7 @@ export default function MoveInForm({ Apartment }) {
   const [state, setState] = useContext(FormSectionsContext);
   const getData = async () => {
     const apartmentName = Apartment.toLowerCase();
-    const response = await axios.get(
-      `http://localhost:5000/api/${apartmentName}`,
-      headers
-    );
+    const response = await axios.get(`api/${apartmentName}`);
 
     await setFormQuestions(response.data[0]);
     await setIsLoading(false);
