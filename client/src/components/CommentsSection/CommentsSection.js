@@ -4,6 +4,8 @@ import styles from "./commentssection.module.css";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 require("dotenv").config();
+const REACT_APP_API_KEY = process.env.REACT_APP_API_KEY;
+const REACT_APP_PRESET = process.env.REACT_APP_PRESET;
 
 function ImageUploader({ title, name }) {
   const [comments, setComments] = useContext(CommentsContext);
