@@ -23,6 +23,10 @@ function ImageUploader({ title, name }) {
     setComments((state) => ({ ...state, [name]: value }));
   };
   const getBlobData = (file) => {
+    const headers = new Headers();
+    headers.append("Content-Type", "application/json");
+    headers.append("Accept", "application/json");
+    headers.append("Origin", "https://cloudinary.com");
     setIsLoading(true);
     axios({
       method: "get",
@@ -40,6 +44,7 @@ function ImageUploader({ title, name }) {
         formData.append("upload_preset", REACT_APP_PRESET);
         axios({
           method: "POST",
+          headers,
           url: `https://api.cloudinary.com/v1_1/dgfbxfa67/upload/${REACT_APP_SIGNATURE}`,
           data: formData,
         })
