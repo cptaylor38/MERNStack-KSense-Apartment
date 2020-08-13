@@ -6,6 +6,7 @@ import axios from "axios";
 require("dotenv").config();
 const REACT_APP_API_KEY = process.env.REACT_APP_API_KEY;
 const REACT_APP_PRESET = process.env.REACT_APP_PRESET;
+const REACT_APP_SIGNATURE = process.env.REACT_APP_SIGNATURE;
 
 function ImageUploader({ title, name }) {
   const [comments, setComments] = useContext(CommentsContext);
@@ -31,6 +32,7 @@ function ImageUploader({ title, name }) {
         formData.append("api_key", REACT_APP_API_KEY);
         // replace this with your upload preset name
         formData.append("upload_preset", REACT_APP_PRESET);
+        formData.append("signature", REACT_APP_SIGNATURE);
         axios({
           method: "POST",
           url: "https://api.cloudinary.com/v1_1/dgfbxfa67/upload",
