@@ -78,7 +78,6 @@ export default function MoveInForm({ Apartment }) {
       await axios({
         method: "post",
         url: "api/submitform",
-        headers,
         data: {
           contact: contactInfo,
           appliances: formAnswers.appliances,
