@@ -13,6 +13,7 @@ import {
   FormAnswersContext,
   KeysFormContext,
   SignatureFormContext,
+  LoadingContext,
 } from "../Store";
 import axios from "axios";
 
@@ -34,7 +35,7 @@ export default function MoveInForm({ Apartment }) {
   const [contactInfo, setContactInfo] = useContext(ContactInfoContext);
   const [keysFormAnswers, setKeysFormAnswers] = useContext(KeysFormContext);
   //-----------end sent to server------------
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useContext(LoadingContext);
   const [formQuestions, setFormQuestions] = useContext(FormQuestionsContext);
   const [state, setState] = useContext(FormSectionsContext);
   const getData = async () => {

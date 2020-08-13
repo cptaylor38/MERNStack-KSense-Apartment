@@ -1,5 +1,9 @@
 import React, { useCallback, useEffect, useContext } from "react";
-import { ImageUploadContext, CommentsContext } from "../../Store";
+import {
+  ImageUploadContext,
+  CommentsContext,
+  LoadingContext,
+} from "../../Store";
 import styles from "./commentssection.module.css";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
@@ -9,6 +13,7 @@ const REACT_APP_PRESET = process.env.REACT_APP_PRESET;
 const REACT_APP_SIGNATURE = process.env.REACT_APP_SIGNATURE;
 
 function ImageUploader({ title, name }) {
+  const [isLoading, setIsLoading] = useContext(LoadingContext);
   const [comments, setComments] = useContext(CommentsContext);
   const [files, setFiles] = useContext(ImageUploadContext);
   const maxSize = 5048576;
@@ -18,6 +23,7 @@ function ImageUploader({ title, name }) {
     setComments((state) => ({ ...state, [name]: value }));
   };
   const getBlobData = (file) => {
+    setIsLoading(true);
     axios({
       method: "get",
       url: file, // blob url eg. blob:http://127.0.0.1:8000/e89c5d87-a634-4540-974c-30dc476825cc
@@ -32,14 +38,14 @@ function ImageUploader({ title, name }) {
         formData.append("api_key", REACT_APP_API_KEY);
         // replace this with your upload preset name
         formData.append("upload_preset", REACT_APP_PRESET);
-        formData.append("signature", REACT_APP_SIGNATURE);
         axios({
           method: "POST",
-          url: "https://api.cloudinary.com/v1_1/dgfbxfa67/upload",
+          url: `https://api.cloudinary.com/v1_1/dgfbxfa67/upload/${REACT_APP_SIGNATURE}`,
           data: formData,
         })
           .then((res) => {
             const imageURL = res.data.url;
+            setIsLoading(false);
             return files[name]
               ? setFiles((state) => ({
                   ...state,
